@@ -1,6 +1,6 @@
 import GamePlay from './GamePlay';
 import themes from './themes';
-import { playerClasses, computerClasses} from './Characters/infoCharacter';
+import { characterGenerator, generateTeam } from './generators';
 import cursors from './cursors';
 import Team from './Team';
 import GameState from './GameState';
@@ -17,6 +17,7 @@ export default class GameController {
     // TODO: load saved stated from stateService
 
     this.gamePlay.drawUi(this.initTheme);
+    this.gamePlay.redrawPositions([...this.playerClasses, ...this.computerClasses]);
 
     this.gamePlay.addCellEnterListener(this.onCellEnter);
     this.gamePlay.addCellLeaveListener(this.onCellLeave);

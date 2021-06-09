@@ -10,4 +10,9 @@ export default class Character {
       throw new Error('Error');
     }
   }
+
+  levelUp() {
+    this.level += 1;
+    this.health += 80;
+  }
 }
