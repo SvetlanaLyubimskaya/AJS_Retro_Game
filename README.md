@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/r73wtttuhc4pgny0?svg=true)](https://ci.appveyor.com/project/SvetlanaLyubimskaya/ajs-retro-game-xl0g8)
+
 # AJS. Retro Game
 
 ###### tags: `netology` `advanced js`
