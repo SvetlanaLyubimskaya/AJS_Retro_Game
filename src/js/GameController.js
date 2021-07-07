@@ -17,11 +17,21 @@ export default class GameController {
     // TODO: load saved stated from stateService
 
     this.gamePlay.drawUi(this.initTheme);
-    // this.gamePlay.redrawPositions([...this.playerClasses, ...this.computerClasses]);
+    this.gamePlay.redrawPositions([...this.playerClasses, ...this.computerClasses]);
 
     this.gamePlay.addCellEnterListener(this.onCellEnter);
     this.gamePlay.addCellLeaveListener(this.onCellLeave);
     this.gamePlay.addCellClickListener(this.onCellClick);
+
+    if (this.level === 1) {
+      this.initTheme = themes.prairie;
+    } else if (this.level === 2) {
+      this.initTheme = themes.desert;
+    } else if (this.level === 3) {
+      this.initTheme = themes.arctic;
+    } else if (this.level === 4) {
+      this.initTheme = themes.mountain;
+    }
   }
 
   onCellClick(index) {
@@ -31,10 +41,12 @@ export default class GameController {
   onCellEnter(index) {
     // TODO: react to mouse enter
     this.gamePlay.showCellTooltip(index);
+    this.gamePlay.setCursor(cursors.pointer);
   }
 
   onCellLeave(index) {
     // TODO: react to mouse leave
     this.gamePlay.hideCellTooltip(index);
+    this.gamePlay.setCursor(cursors.pointer);
   }
 }

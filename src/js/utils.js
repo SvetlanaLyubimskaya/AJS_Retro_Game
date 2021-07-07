@@ -28,10 +28,10 @@ export function calcTileType(index, boardSize) {
     return 'right';
   }
 
-  if (index % boardSize === 0) { // кратны 8 
+  if (index % boardSize === 0) { // кратны 8
     return 'left';
   }
-  
+
   return 'center';
 }
 
