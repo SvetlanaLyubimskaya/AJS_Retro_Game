@@ -1,21 +1,20 @@
-import Bowman from './Characters/bowman';
-import Daemon from './Characters/daemon';
-import Magician from './Characters/magician';
-import Swordsman from './Characters/swordsman';
-import Undead from './Characters/undead';
-import Vampire from './Characters/vampire';
+import Bowman from './Characters/Bowman';
+import Daemon from './Characters/Daemon';
+import Magician from './Characters/Magician';
+import Swordsman from './Characters/Swordsman';
+import Undead from './Characters/Undead';
+import Vampire from './Characters/Vampire';
 
 export default class Team {
-  constructor() {
-    this.player = [Magician, Bowman, Swordsman];
-    this.computer = [Daemon, Undead, Vampire];
+  static getStartPlayerTeam() {
+    return [new Bowman(1), new Swordsman(1)];
   }
 
-  // getPlayerTeam() {
-  //   return [Magician, Bowman, Swordsman];
-  // }
+  static getPlayerTeam() {
+    return [Magician, Bowman, Swordsman];
+  }
 
-  // getComputerTeam() {
-  //   return [Daemon, Undead, Vampire];
-  // }
+  static getComputerTeam() {
+    return [Daemon, Undead, Vampire];
+  }
 }

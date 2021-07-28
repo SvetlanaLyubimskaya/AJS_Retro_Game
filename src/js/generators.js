@@ -7,9 +7,11 @@
  */
 export function* characterGenerator(allowedTypes, maxLevel) {
   // TODO: write logic here
-  const charType = Math.floor(Math.random() * allowedTypes.length);
-  const charLevel = Math.floor(Math.random() * maxLevel);
-  yield new allowedTypes[charType](charLevel);
+  while (true) {
+    const charType = Math.floor(Math.random() * allowedTypes.length);
+    const charLevel = Math.floor(1 + (Math.random() * maxLevel));
+    yield new allowedTypes[charType](charLevel);
+  }
 }
 
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
@@ -17,7 +19,7 @@ export function generateTeam(allowedTypes, maxLevel, characterCount) {
   const team = [];
   const char = characterGenerator(allowedTypes, maxLevel);
 
-  for (let i = 0; i < characterCount; i++) { // MDN Generator.prototype.next()
+  for (let i = 0; i < characterCount; i += 1) { // MDN Generator.prototype.next()
     team.push(char.next().value);
   }
 
