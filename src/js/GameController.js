@@ -4,13 +4,14 @@ import { generateTeam } from './generators';
 import cursors from './cursors';
 import Team from './Team';
 import PositionedCharacter from './PositionedCharacter';
-// import GameState from './GameState';
+import GameState from './GameState';
 
 export default class GameController {
   constructor(gamePlay, stateService) {
     this.gamePlay = gamePlay;
     this.stateService = stateService;
     this.initTheme = themes.prairie;
+    this.cursors = cursors.pointer;
     this.currentMove = 'user';
     this.blockedBoard = false;
     this.playerTeam = [];
@@ -54,24 +55,61 @@ export default class GameController {
     }
   }
 
-  getPositions() {
+  getPositions(length) {
     const position = { player: [], computer: [] };
+    let random;
+    for (let i = 0; i < length; i += 1) {
+      do {
+        random = this.randomPosition(0);
+      } while (position.player.includes(random));
+      position.player.push(random);
 
+      do {
+        random = this.randomPosition(7);
+      } while (position.computer.includes(random));
+      position.computer.push(random);
+    }
     return position;
   }
 
+  randomPosition(col) {
+    this.col = col;
+    return (this.col + (Math.floor(Math.random() * 8) * 8));
+  }
+
   events() {
-    this.gamePlay.addNewGameListener(this.newGame);
-    this.gamePlay.addSaveGameListener(this.saveGame);
+    this.gamePlay.addNewGameListener(this.newGame.bind(this));
+    this.gamePlay.addSaveGameListener(this.saveGame.bind(this));
     this.gamePlay.addLoadGameListener(this.loadGame);
     this.gamePlay.addCellEnterListener(this.onCellEnter);
     this.gamePlay.addCellLeaveListener(this.onCellLeave);
     this.gamePlay.addCellClickListener(this.onCellClick);
   }
 
-  // onCellClick(index) {
-  //   // TODO: react to click
-  // }
+  newGame() {
+    this.playerPositions = [];
+    this.computerPositions = [];
+    this.level = 1;
+    this.point = 0;
+    this.initTheme = themes.prairie;
+    this.cursors = cursors.pointer;
+    this.gameStart();
+  }
+
+  saveGame() {
+    const playerLevel = {
+      point: this.point,
+      level: this.level,
+      playerPositions: this.playerPositions,
+      computerPositions: this.computerPositions,
+    };
+    this.stateService.save(GameState.from(playerLevel));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onCellClick() {
+    // TODO: react to click
+  }
 
   onCellEnter(index) {
     // TODO: react to mouse enter
