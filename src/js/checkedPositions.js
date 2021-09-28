@@ -29,6 +29,7 @@ export default function checkedPositions(position, distance, boardSize) {
       values.push((indexRow - i) * boardSize + (indexColumn + i));
     }
   }
+  // eslint-disable-next-line no-console
   console.log(values);
   return values;
 }

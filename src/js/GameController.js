@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+// eslint-disable class-methods-use-this
+
 import GamePlay from './GamePlay';
 import themes from './themes';
 import { generateTeam } from './generators';
@@ -57,17 +60,23 @@ export default class GameController {
     } else if (this.level === 2) {
       this.initTheme = themes.desert;
       this.playerTeam = generateTeam(Team.getPlayerTeam(), 1, 1);
-      this.computerTeam = generateTeam(Team.getComputerTeam(), 2, (this.playerTeam.length + this.playerPositions.length));
+      this.computerTeam = generateTeam(
+        Team.getComputerTeam(), 2, (this.playerTeam.length + this.playerPositions.length),
+      );
       this.setPositionCharacter(this.playerTeam, this.computerTeam);
     } else if (this.level === 3) {
       this.initTheme = themes.arctic;
       this.playerTeam = generateTeam(Team.getPlayerTeam(), 2, 2);
-      this.computerTeam = generateTeam(Team.getComputerTeam(), 3, (this.playerTeam.length + this.playerPositions.length));
+      this.computerTeam = generateTeam(
+        Team.getComputerTeam(), 3, (this.playerTeam.length + this.playerPositions.length),
+      );
       this.setPositionCharacter(this.playerTeam, this.computerTeam);
     } else if (this.level === 4) {
       this.initTheme = themes.mountain;
       this.playerTeam = generateTeam(Team.getPlayerTeam(), 3, 2);
-      this.computerTeam = generateTeam(Team.getComputerTeam(), 4, (this.playerTeam.length + this.playerPositions.length));
+      this.computerTeam = generateTeam(
+        Team.getComputerTeam(), 4, (this.playerTeam.length + this.playerPositions.length),
+      );
       this.setPositionCharacter(this.playerTeam, this.computerTeam);
       return;
     }
@@ -208,7 +217,9 @@ export default class GameController {
         this.currentMove = 'computer';
         this.computerStrategy();
       } else if (this.selectedCell && this.gamePlay.boardEl.style.cursor === 'crosshair') {
-        const thisAttackComputer = [...this.computerPositions].find((item) => item.position === index);
+        const thisAttackComputer = [...this.computerPositions].find(
+          (item) => item.position === index,
+        );
         this.gamePlay.deselectCell(selectedCharacterIndex);
         this.gamePlay.deselectCell(index);
         this.gamePlay.setCursor(cursors.auto);
@@ -234,8 +245,12 @@ export default class GameController {
     this.currentMove = this.currentMove === 'computer' ? 'player' : 'computer';
 
     if (targetedCharacter.health <= 0) {
-      this.playerPositions = this.playerPositions.filter((item) => item.position !== target.position);
-      this.computerPositions = this.computerPositions.filter((item) => item.position !== target.position);
+      this.playerPositions = this.playerPositions.filter(
+        (item) => item.position !== target.position,
+      );
+      this.computerPositions = this.computerPositions.filter(
+        (item) => item.position !== target.position,
+      );
       if (this.playerPositions.length === 0) {
         GamePlay.showMessage('Game over');
         this.blockedBoard = true;
@@ -299,7 +314,7 @@ export default class GameController {
     }
   }
 
-  // ход комьютера подправить
+  // ход комьютера
   computerMove(itemComputer) {
     const currentComputerCharacter = itemComputer;
     const itemComputerDistance = itemComputer.character.distance;
@@ -333,12 +348,18 @@ export default class GameController {
     if (Math.abs(nearTarget.steprow) === Math.abs(nearTarget.stepcolumn)) {
       if (Math.abs(nearTarget.steprow) > itemComputerDistance) {
         distanceRow = (itemComputerRow - (itemComputerDistance * Math.sign(nearTarget.steprow)));
-        distanceColumn = (itemComputerColumn - (itemComputerDistance * Math.sign(nearTarget.stepcolumn)));
+        distanceColumn = (itemComputerColumn - (
+          itemComputerDistance * Math.sign(nearTarget.stepcolumn)
+        ));
 
         currentComputerCharacter.position = this.distanceIndex(distanceRow, distanceColumn);
       } else {
-        distanceRow = (itemComputerRow - (nearTarget.steprow - (1 * Math.sign(nearTarget.steprow))));
-        distanceColumn = (itemComputerColumn - (nearTarget.stepcolumn - (1 * Math.sign(nearTarget.steprow))));
+        distanceRow = (itemComputerRow - (
+          nearTarget.steprow - (1 * Math.sign(nearTarget.steprow))
+        ));
+        distanceColumn = (itemComputerColumn - (
+          nearTarget.stepcolumn - (1 * Math.sign(nearTarget.steprow))
+        ));
 
         currentComputerCharacter.position = this.distanceIndex(distanceRow, distanceColumn);
       }
@@ -347,12 +368,16 @@ export default class GameController {
         distanceRow = (itemComputerRow - (itemComputerDistance * Math.sign(nearTarget.steprow)));
         currentComputerCharacter.position = this.distanceIndex(distanceRow, (itemComputerColumn));
       } else {
-        distanceRow = (itemComputerRow - (nearTarget.steprow - (1 * Math.sign(nearTarget.steprow))));
+        distanceRow = (itemComputerRow - (
+          nearTarget.steprow - (1 * Math.sign(nearTarget.steprow))
+        ));
         currentComputerCharacter.position = this.distanceIndex(distanceRow, (itemComputerColumn));
       }
     } else if (nearTarget.steprow === 0) {
       if (Math.abs(nearTarget.stepcolumn) > itemComputerDistance) {
-        distanceColumn = (itemComputerColumn - (itemComputerDistance * Math.sign(nearTarget.stepcolumn)));
+        distanceColumn = (itemComputerColumn - (
+          itemComputerDistance * Math.sign(nearTarget.stepcolumn)
+        ));
         currentComputerCharacter.position = this.distanceIndex((itemComputerRow), distanceColumn);
       } else {
         const tempFormul = (nearTarget.stepcolumn - (1 * Math.sign(nearTarget.stepcolumn)));
@@ -368,10 +393,14 @@ export default class GameController {
         currentComputerCharacter.position = this.distanceIndex(distanceRow, (itemComputerColumn));
       }
     } else if (Math.abs(nearTarget.stepcolumn) > itemComputerDistance) {
-      distanceColumn = (itemComputerColumn - (itemComputerDistance * Math.sign(nearTarget.stepcolumn)));
+      distanceColumn = (itemComputerColumn - (
+        itemComputerDistance * Math.sign(nearTarget.stepcolumn)
+      ));
       currentComputerCharacter.position = this.distanceIndex((itemComputerRow), distanceColumn);
     } else {
-      currentComputerCharacter.position = this.distanceIndex((itemComputerRow), (itemComputerColumn));
+      currentComputerCharacter.position = this.distanceIndex(
+        (itemComputerRow), (itemComputerColumn),
+      );
     }
   }
 
