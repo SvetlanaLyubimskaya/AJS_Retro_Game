@@ -1,4 +1,4 @@
-// eslint-disable class-methods-use-this
+/* eslint-disable class-methods-use-this */
 import GamePlay from './GamePlay';
 import themes from './themes';
 import { generateTeam } from './generators';
